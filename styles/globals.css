@@ -1,27 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary: #292828;
+  --secondary: #cac9c8;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 2px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 3px solid var(--primary);
+}
+body{
+  background-color: #2d2d2e;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer components{
+  .infoText{
+    @apply py-2 bg-gray-600/50 rounded-md text-center w-full md:w-56 md:px-2
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  .newChat{
+    @apply flex items-center space-x-2 py-3 rounded-md px-2 cursor-pointer text-gray-300 hover:bg-gray-600/20 transition duration-300
+  }
+  .closeSide{
+    @apply rounded-md flex items-center hover:bg-gray-600/20 cursor-pointer px-3 transition duration-300
+  }
 }

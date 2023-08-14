@@ -68,9 +68,8 @@ function ChatInput({ chatId }: Props) {
     })
 
   }
-console.log(prompt,"here")
   return (
-    <div className='bg-transparent flex justify-center py-3 px-4'>
+    <div className='bg-transparent flex justify-center pt-3 px-4 pb-10 mb-10 md:mb-0'>
       <form onSubmit={sendMessage} className='bg-gray-500/20 py-3 px-3 space-x-5 flex shadow-custom w-full lg:w-[45rem] rounded-xl'>
         <input type='text'
           onChange={(e) => setPrompt(e.target.value)}

@@ -10,9 +10,9 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { useState } from 'react'
 export default async function HomePage() {
   return (
-    <main className={`flex flex-col items-center md:justify-center h-screen text-white px-2 w-full`}>
-      <h1 className='text-4xl font-bold mb-20 text-center'>ChatGPT</h1>
-      <div className='flex flex-col w-full gap-5 md:flex-row justify-center'>
+    <main className={`flex flex-col md:justify-center h-screen text-white px-2 w-full overflow-y-auto pt-5 pb-20`}>
+      <h1 className='text-4xl font-bold mb-10 text-center'>ChatGPT</h1>
+      <div className='flex flex-col w-full gap-5 md:flex-row md:justify-center'>
         <div className='space-y-2 flex flex-col items-center'>
           <div className='flex justify-center mb-5 space-x-2'>
             <SunIcon className='w-6' />

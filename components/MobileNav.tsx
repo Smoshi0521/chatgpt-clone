@@ -10,11 +10,15 @@ import { db } from '@/firebase';
 import ChatRow from './ChatRow';
 import { useState } from 'react';
 import ModeList from './ModeList';
-function MobileNav() {
+import { useRouter } from 'next/navigation';
+import { addDoc, serverTimestamp } from 'firebase/firestore';
+
+const MobileNav = () => {
   const { data: session } = useSession();
   const [listChats, setListChats] = useState(false)
   const [chatName, setChatName] = useState('')
-  const [timer,setTimer] = useState(false)
+  const [timer, setTimer] = useState(false)
+  const router = useRouter();
   const [chats, loading, error] = useCollection(
     session && query(
       collection(db, 'users', session?.user?.email!, 'chats'),
@@ -27,23 +31,31 @@ function MobileNav() {
     setTimeout(() => setTimer(true), 300)
   }
 
+  const createNewChat = async () => {
+    const doc = await addDoc(collection(db, "users", session?.user?.email!, 'chats',), {
+      userId: session?.user?.email!,
+      createdAt: serverTimestamp()
+    }
+    )
+    router.push(`/chat/${doc.id}`)
+  }
   return (
     <div className={`w-full`}>
       <div className='flex justify-between items-end bg-[#343541] border border-transparent border-b-gray-200/30 w-full px-3 py-3 text-white'>
-        <Bars3Icon className={`cursor-pointer w-8 ${!listChats ? "z-20" : "z-10"}`} onClick={handleListChats} />
+        <Bars3Icon className={`cursor-pointer w-6 ${!listChats ? "z-20" : "z-10"}`} onClick={handleListChats} />
         <div className='truncate w-3/6 text-center'>{chatName}</div>
-        <PlusIcon className='w-6' />
+        <PlusIcon className={`cursor-pointer w-6 ${!listChats ? "z-20" : "z-10"}`} onClick={createNewChat} />
       </div>
 
-      <div className={`flex absolute h-screen top-0 w-full transform ease-in duration-300 ${listChats ? "bg-gray-700/60 z-20" : "z-10" }`}>
+      <div className={`flex absolute h-screen top-0 w-full transform ease-in duration-300 ${listChats ? "bg-gray-700/60 z-20" : "z-10"} `}>
         <div className={`flex flex-row w-full transform ease-in duration-300 absolute ${!listChats ? "left-[-100%] " : "left-[0]"}`}>
           <div className={`bg-[#202123] w-[80%] sm:w-[60%] p-2 flex flex-col h-screen`}>
             <div className='w-full flex flex-row gap-2 mb-2'>
               <NewChat />
             </div>
-            <div>
+            {/* <div>
               <ModeList />
-            </div>
+            </div> */}
 
             <div className='flex-1 overflow-y-auto'>
               {loading && (
@@ -54,14 +66,14 @@ function MobileNav() {
 
               {
                 chats?.docs.map((chat) => (
-                  <ChatRow key={chat.id} id={chat.id} setListChats={setListChats} setChatName={setChatName}/>
+                  <ChatRow key={chat.id} id={chat.id} setListChats={setListChats} setChatName={setChatName} />
                 ))
               }
             </div>
 
             <div className='py-2 w-full border border-transparent border-t-gray-500'>
               {session && (
-                <div onClick ={() => signOut()} className='py-3 px-2 flex items-center space-x-3 hover:bg-gray-700/70 rounded-md cursor-pointer'>
+                <div onClick={() => signOut()} className='py-3 px-2 flex items-center space-x-3 hover:bg-gray-700/70 rounded-md cursor-pointer'>
                   <img src={session?.user?.image! || `https://ui-avatars.com/api/?name=${session?.user?.name!}`} alt="Profile picture" className='w-8 rounded-md' />
                   <p className='text-white truncate'>{session.user?.email!}</p>
                 </div>

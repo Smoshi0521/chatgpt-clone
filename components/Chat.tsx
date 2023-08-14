@@ -24,12 +24,12 @@ function Chat({ chatId }: Props) {
   //   console.log(new Date(messages?.data().createdAt?.toDate()), index)
   // ))
   return (
-    <div className='flex-1 overflow-y-auto transition duration-300'>
+    <div className='h-5/6 overflow-y-auto transition duration-300'>
       {
         messages?.empty && (
           <div className='w-full flex flex-col space-y-5 items-center justify-center mt-10 '>
-            <p className='text-[30px]'>Start your chat with GPT</p>
-            <ArrowDownCircleIcon className='w-12 animate-bounce'/>
+            <p className='text-2xl md:text-[30px] text-center'>Start your chat with GPT</p>
+            <ArrowDownCircleIcon className='w-8 md:w-12 animate-bounce'/>
           </div>
         )
       }

@@ -3,7 +3,7 @@ import { Bars3Icon } from '@heroicons/react/24/solid'
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import React, { SetStateAction } from 'react';
 import NewChat from './NewChat';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { collection, orderBy, query } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '@/firebase';
@@ -61,7 +61,7 @@ function MobileNav() {
 
             <div className='py-2 w-full border border-transparent border-t-gray-500'>
               {session && (
-                <div className='py-3 px-2 flex items-center space-x-3 hover:bg-gray-700/70 rounded-md cursor-pointer'>
+                <div onClick ={() => signOut()} className='py-3 px-2 flex items-center space-x-3 hover:bg-gray-700/70 rounded-md cursor-pointer'>
                   <img src={session?.user?.image! || `https://ui-avatars.com/api/?name=${session?.user?.name!}`} alt="Profile picture" className='w-8 rounded-md' />
                   <p className='text-white truncate'>{session.user?.email!}</p>
                 </div>
